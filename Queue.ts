@@ -15,7 +15,7 @@ export default class Queue {
     return this._data.length;
   }
 
-  get waitTime(): string {
-    return `Current wait time is: ${this._data.length * 15} minutes`;
+  get waitTime(): number {
+    return this._data.length * 15;
   }
 }

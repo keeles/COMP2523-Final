@@ -5,7 +5,6 @@ import IHousehold from "./interfaces/IHousehold";
 import IPerson from "./interfaces/IPerson";
 import IAddress from "./interfaces/IAddress";
 import IClinic from "./interfaces/IClinic";
-import {createInterface} from "node:readline";
 import Queue from "./Queue";
 
 export default class Map {
@@ -19,6 +18,10 @@ export default class Map {
     const mapData = await fs.readFile(fileName, "utf8");
     const mapObj: IMapData = JSON.parse(mapData);
     return new Map(mapObj);
+  }
+
+  get map() {
+    return this._mapData;
   }
 
   printMap() {
@@ -92,7 +95,7 @@ function joinWaitlist(person: IPerson, clinic: IClinic) {
   if (!clinic.queue) {
     clinic.queue = new Queue();
   }
-  if (person.age > clinic.currentIntakeAge) {
+  if (person.age >= clinic.currentIntakeAge) {
     clinic.queue.enqueue(person);
     console.log(`${person.fullName} was registered for vaccination at ${clinic.name}`);
   }
